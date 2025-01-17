@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Crop Suggestion Result</title>
+    <style>
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            text-align: center;
+        }
+        .result-box {
+            background-color: #f5f5f5;
+            padding: 20px;
+            border-radius: 8px;
+            margin: 20px 0;
+        }
+        .back-btn {
+            padding: 10px 20px;
+            cursor: pointer;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 4px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Crop Suggestion Results</h1>
+        <div class="result-box">
+            <h2 id="suggestion-result"></h2>
+        </div>
+        <button class="back-btn" onclick="window.location.href='index.html'">Try Again</button>
+    </div>
+
+    <script>
+        window.onload = function() {
+            // Get URL parameters
+            const urlParams = new URLSearchParams(window.location.search);
+            
+            // Get values
+            const temperature = parseFloat(urlParams.get('temperature'));
+            const water = parseFloat(urlParams.get('water'));
+            const sulphur = parseFloat(urlParams.get('sulphur'));
+            const phosphorus = parseFloat(urlParams.get('phosphorus'));
+            const nitrogen = parseFloat(urlParams.get('nitrogen'));
+
+            // Determine suggestion
+            let suggestion = '';
+            if (temperature >= 20 && water >= 50 && nitrogen >= 30) {
+                suggestion = 'Rice';
+            } else if (temperature >= 18 && water <= 50 && sulphur >= 15) {
+                suggestion = 'Wheat';
+            } else if (temperature >= 25 && phosphorus >= 20) {
+                suggestion = 'Corn';
+            } else {
+                suggestion = 'Consider growing legumes like Peas or Beans';
+            }
+
+            // Display suggestion
+            document.getElementById('suggestion-result').innerText = 'Best crop for these conditions: ' + suggestion;
+        };
+    </script>
+</body>
+</html>

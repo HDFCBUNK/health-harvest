@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Harvestify - Crop Suggestion</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+          <h1>Healthy Harvest</h1>
+        <h3>Select Conditions to Suggest the Best Crop</h3>
+
+        <!-- Crop Images -->
+        <div class="crop-images">
+            <img src="https://img.freepik.com/free-photo/top-view-raw-rice-inside-plate-dark-desk_179666-27235.jpg?semt=ais_hybrid" alt="Rice Crop">
+            <img src="https://t3.ftcdn.net/jpg/09/06/80/00/360_F_906800032_9E5vLs9WdUymAkHZKNWUypikiKHprduf.jpg" alt="Wheat Crop">
+            <img src="https://media.istockphoto.com/id/1336478021/photo/raw-corn-cobs-sweet-corn-harvest-corncobs-with-leaves-and-husk-on-dark-wooden-table-maize.jpg?s=612x612&w=0&k=20&c=Sip8-fwXoel-eWqogn3Hf0griqPXuusBkltJw7MNq_M=" alt="Corn Crop">
+        </div>
+
+        <!-- Form Table for Input Data -->
+        <form id="crop-form">
+            <table>
+                <tr>
+                    <td><label for="temperature"><i>Temperature (°C):</i></label></td>
+                    <td><input type="number" id="temperature" name="temperature" required placeholder="type some here"></td>
+                        
+                <tr>
+                    <td><label for="water"><i>Water Quantity (L):</i></label></td>
+                    <td><input type="number" id="water" name="water" required placeholder="type some here"></td>
+                </tr>
+                
+                <tr>
+                    <td><label for="sulphur"><i>Sulphur (mg):</i></label></td>
+                    <td><input type="number" id="sulphur" name="sulphur" required placeholder="type some here"></td>
+                </tr>
+                <tr>
+                    <td><label for="phosphorus"><i>Phosphorus (mg):</i></label></td>
+                    <td><input type="number" id="phosphorus" name="phosphorus" required placeholder="type some here"></td>
+                </tr>
+                <tr>
+                    <td><label for="nitrogen"><i>Nitrogen (mg):</i></label></td>
+                    <td><input type="number" id="nitrogen" name="nitrogen" required placeholder="type some here"></td>
+                </tr>
+            </table>
+            <button type="button" id="suggest-btn">OK</button>
+        </form>
+
+       <H2><p id="suggestion-result"></p></H2>
+    </div>
+
+    <script src="script.js"></script>
+   
+</body>
+</html>
