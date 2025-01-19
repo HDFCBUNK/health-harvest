@@ -3,53 +3,163 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Harvestify - Crop Suggestion</title>
-    <link rel="stylesheet" href="styles.css">
+    <title>Bookzii</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            /* background: url('cafe.jpg.jpg') no-repeat center center fixed; */
+            background-size: cover;
+            color: #fff;
+         
+                background-image: url("cafe.jpg.jpg");
+                background-size: 100% 740;
+            
+        }
+
+        .container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        .card {
+            background: rgba(0, 0, 0, 0.8);
+            padding: 20px;
+            border-radius: 10px;
+            width: 300px;
+            text-align: center;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+        }
+
+        .card h1 {
+            margin-bottom: 20px;
+            font-size: 2rem;
+        }
+
+        .card input {
+            width: 100%;
+            padding: 10px;
+            margin: 10px 0;
+            border: none;
+            border-radius: 5px;
+        }
+
+        .card button {
+            width: 100%;
+            padding: 10px;
+            background: #ff5722;
+            border: none;
+            border-radius: 5px;
+            color: #fff;
+            font-size: 1rem;
+            cursor: pointer;
+        }
+
+        .card button:hover {
+            background: #e64a19;
+        }
+
+        .link {
+            color: #ff5722;
+            text-decoration: none;
+            font-size: 0.9rem;
+        }
+
+        .link:hover {
+            text-decoration: underline;
+        }
+    </style>
 </head>
 <body>
-    <div class="container">
-          <h1>Healthy Harvest</h1>
-        <h3>Select Conditions to Suggest the Best Crop</h3>
-
-        <!-- Crop Images -->
-        <div class="crop-images">
-            <img src="https://img.freepik.com/free-photo/top-view-raw-rice-inside-plate-dark-desk_179666-27235.jpg?semt=ais_hybrid" alt="Rice Crop">
-            <img src="https://t3.ftcdn.net/jpg/09/06/80/00/360_F_906800032_9E5vLs9WdUymAkHZKNWUypikiKHprduf.jpg" alt="Wheat Crop">
-            <img src="https://media.istockphoto.com/id/1336478021/photo/raw-corn-cobs-sweet-corn-harvest-corncobs-with-leaves-and-husk-on-dark-wooden-table-maize.jpg?s=612x612&w=0&k=20&c=Sip8-fwXoel-eWqogn3Hf0griqPXuusBkltJw7MNq_M=" alt="Corn Crop">
+    <!-- Login Page -->
+    <div class="container" id="login-page">
+        <div class="card">
+            <h1>Bookzii</h1>
+            <input type="text" id="username" placeholder="Enter Username" required>
+            <input type="password" id="password" placeholder="Enter Password" required>
+            <p>Forgot passoward ?</p>
+            <button onclick="login()">Login</button>
+            <p><a href="#" class="link" onclick="showSignUpPage()">Don&#39;t have an account? Sign Up</a></p>
         </div>
-
-        <!-- Form Table for Input Data -->
-        <form id="crop-form">
-            <table>
-                <tr>
-                    <td><label for="temperature"><i>Temperature (°C):</i></label></td>
-                    <td><input type="number" id="temperature" name="temperature" required placeholder="type some here"></td>
-                        
-                <tr>
-                    <td><label for="water"><i>Water Quantity (L):</i></label></td>
-                    <td><input type="number" id="water" name="water" required placeholder="type some here"></td>
-                </tr>
-                
-                <tr>
-                    <td><label for="sulphur"><i>Sulphur (mg):</i></label></td>
-                    <td><input type="number" id="sulphur" name="sulphur" required placeholder="type some here"></td>
-                </tr>
-                <tr>
-                    <td><label for="phosphorus"><i>Phosphorus (mg):</i></label></td>
-                    <td><input type="number" id="phosphorus" name="phosphorus" required placeholder="type some here"></td>
-                </tr>
-                <tr>
-                    <td><label for="nitrogen"><i>Nitrogen (mg):</i></label></td>
-                    <td><input type="number" id="nitrogen" name="nitrogen" required placeholder="type some here"></td>
-                </tr>
-            </table>
-            <button type="button" id="suggest-btn">OK</button>
-        </form>
-
-       <H2><p id="suggestion-result"></p></H2>
     </div>
 
-    <script src="script.js"></script>
-   
+    <!-- Sign-Up Page -->
+    <div class="container" id="signup-page" style="display: none;">
+        <div class="card">
+            <h1>Sign Up</h1>
+            <input type="email" id="email" placeholder="Enter Email" required>
+            <input type="text" id="mobile" placeholder="Enter Mobile Number" required>
+            <button onclick="sendVerificationCode()">Send Verification Code</button>
+            <input type="text" id="verification-code" placeholder="Enter Verification Code" required>
+            <input type="text" id="new-username" placeholder="Set Username" required>
+            <input type="password" id="new-password" placeholder="Set Password" required>
+            <button onclick="signUp()">Sign Up</button>
+            
+        </div>
+    </div>
+
+    <!-- Booking Page -->
+    <div class="container" id="booking-page" style="display: none;">
+        <div class="card">
+            <h1>Book Now</h1>
+            <select id="booking-type">
+                <option value="room">Room</option>
+                <option value="table">Table</option>
+                <option value="party-hall">Party Hall</option>
+            </select>
+            <input type="number" id="members" placeholder="Number of Members" required>
+            <button onclick="searchHotels()">Search</button>
+        </div>
+    </div>
+
+    <!-- Hotels/Cafes List Page -->
+    <div class="container" id="list-page" style="display: none;">
+        <div class="card">
+            <h1>Available Options</h1>
+            <div id="results"></div>
+            <button onclick="setReminder()">Set Reminder</button>
+        </div>
+    </div>
+
+    <script>
+        function showSignUpPage() {
+            document.getElementById('login-page').style.display = 'none';
+            document.getElementById('signup-page').style.display = 'flex';
+        }
+
+        function login() {
+            // Placeholder for login logic
+            alert('Login Successful!');
+            document.getElementById('login-page').style.display = 'none';
+            document.getElementById('booking-page').style.display = 'flex';
+        }
+
+        function signUp() {
+            // Placeholder for sign-up logic
+            alert('Sign-Up Successful!');
+            document.getElementById('signup-page').style.display = 'none';
+            document.getElementById('login-page').style.display = 'flex';
+        }
+
+        function searchHotels() {
+            // Placeholder for hotel search logic
+            document.getElementById('booking-page').style.display = 'none';
+            document.getElementById('list-page').style.display = 'flex';
+
+            // Example: Populate available hotels
+            document.getElementById('results').innerHTML = `
+                <p>Hotel A - Available</p>
+                <p>Hotel B - Available</p>
+                <p>Hotel C - Full</p>
+            `;
+        }
+
+        function setReminder() {
+            alert('Reminder set for 30 minutes before the booking time!');
+        }
+    </script>
 </body>
 </html>
