@@ -3,162 +3,301 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Bookzii</title>
+    <title>Bookzii - Your Booking Companion</title>
     <style>
         body {
-            font-family: Arial, sans-serif;
+            font-family: 'Roboto', sans-serif;
             margin: 0;
             padding: 0;
-            /* background: url('cafe.jpg.jpg') no-repeat center center fixed; */
+            background: url('cafe.jpg.jpg') no-repeat center center fixed;
             background-size: cover;
+            color: #333;
+        }
+
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px 40px;
+            background: rgba(0, 0, 0, 0.85);
             color: #fff;
-         
-                background-image: url("cafe.jpg.jpg");
-                background-size: 100% 740;
-            
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
+        }
+
+        header .logo {
+            font-size: 2rem;
+            font-weight: bold;
+            color: #ff9800;
+        }
+
+        header nav {
+            display: flex;
+            gap: 25px;
+        }
+
+        header nav a {
+            color: #fff;
+            text-decoration: none;
+            font-size: 1rem;
+            font-weight: 500;
+            transition: color 0.3s;
+            cursor: pointer;
+        }
+
+        header nav a:hover {
+            color: #ff9800;
         }
 
         .container {
-            display: flex;
+            display: none;
+            flex-direction: column;
             justify-content: center;
             align-items: center;
-            height: 100vh;
+            min-height: calc(100vh - 100px);
+        }
+
+        .container.active {
+            display: flex;
         }
 
         .card {
-            background: rgba(0, 0, 0, 0.8);
-            padding: 20px;
-            border-radius: 10px;
-            width: 300px;
+            background: rgba(255, 255, 255, 0.9);
+            padding: 30px;
+            border-radius: 12px;
+            width: 350px;
             text-align: center;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.2);
         }
 
         .card h1 {
             margin-bottom: 20px;
-            font-size: 2rem;
+            font-size: 2.5rem;
+            color: #ff9800;
         }
 
-        .card input {
+        .card input, .card select {
             width: 100%;
-            padding: 10px;
-            margin: 10px 0;
-            border: none;
-            border-radius: 5px;
+            padding: 12px;
+            margin: 15px 0;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            font-size: 1rem;
         }
 
         .card button {
             width: 100%;
-            padding: 10px;
-            background: #ff5722;
+            padding: 12px;
+            background: #ff9800;
             border: none;
-            border-radius: 5px;
+            border-radius: 8px;
             color: #fff;
-            font-size: 1rem;
+            font-size: 1.1rem;
+            font-weight: bold;
             cursor: pointer;
+            transition: background 0.3s;
         }
 
         .card button:hover {
-            background: #e64a19;
+            background: #e68900;
         }
 
-        .link {
-            color: #ff5722;
-            text-decoration: none;
+        .results {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 25px;
+            justify-content: center;
+            padding: 20px;
+            width: 100%;
+        }
+
+        .result-card {
+            background: #fff;
+            padding: 20px;
+            border-radius: 12px;
+            width: 280px;
+            text-align: center;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+            transition: transform 0.3s, box-shadow 0.3s;
+            cursor: pointer;
+        }
+
+        .result-card img {
+            width: 100%;
+            border-radius: 12px;
+            margin-bottom: 10px;
+        }
+
+        .result-card h3 {
+            margin: 10px 0;
+            color: #ff9800;
+        }
+
+        .result-card:hover {
+            transform: scale(1.05);
+            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        footer {
+            background: rgba(0, 0, 0, 0.85);
+            color: #fff;
+            text-align: center;
+            padding: 15px 20px;
             font-size: 0.9rem;
+            box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.5);
         }
 
-        .link:hover {
-            text-decoration: underline;
+        .details-content img {
+            max-width: 100%;
+            border-radius: 12px;
+            margin-bottom: 10px;
         }
     </style>
 </head>
 <body>
+    <!-- Header -->
+    <header>
+        <div class="logo">Bookzii</div>
+        <nav>
+            <a onclick="showPage('login-page')">Home</a>
+            <a onclick="showPage('contact-page')">Contact</a>
+            <a onclick="showPage('about-page')">About</a>
+            <a onclick="showPage('login-page')">Login</a>
+        </nav>
+    </header>
+
     <!-- Login Page -->
-    <div class="container" id="login-page">
+    <div class="container active" id="login-page">
         <div class="card">
-            <h1>Bookzii</h1>
+            <h1>Login</h1>
             <input type="text" id="username" placeholder="Enter Username" required>
             <input type="password" id="password" placeholder="Enter Password" required>
-            <p>Forgot passoward ?</p>
             <button onclick="login()">Login</button>
-            <p><a href="#" class="link" onclick="showSignUpPage()">Don&#39;t have an account? Sign Up</a></p>
         </div>
     </div>
 
-    <!-- Sign-Up Page -->
-    <div class="container" id="signup-page" style="display: none;">
+    <!-- Contact Page -->
+    <div class="container" id="contact-page">
         <div class="card">
-            <h1>Sign Up</h1>
-            <input type="email" id="email" placeholder="Enter Email" required>
-            <input type="text" id="mobile" placeholder="Enter Mobile Number" required>
-            <button onclick="sendVerificationCode()">Send Verification Code</button>
-            <input type="text" id="verification-code" placeholder="Enter Verification Code" required>
-            <input type="text" id="new-username" placeholder="Set Username" required>
-            <input type="password" id="new-password" placeholder="Set Password" required>
-            <button onclick="signUp()">Sign Up</button>
-            
+            <h1>Contact Us</h1>
+            <p>For inquiries, email us at support@bookzii.com or call +91 8690873446</p>
+        </div>
+    </div>
+
+    <!-- About Page -->
+    <div class="container" id="about-page">
+        <div class="card">
+            <h1>About Bookzii</h1>
+            <p>Bookzii is your ultimate booking companion for tables, hotels, resorts, and more.</p>
         </div>
     </div>
 
     <!-- Booking Page -->
-    <div class="container" id="booking-page" style="display: none;">
+    <div class="container" id="booking-page">
         <div class="card">
             <h1>Book Now</h1>
             <select id="booking-type">
-                <option value="room">Room</option>
                 <option value="table">Table</option>
-                <option value="party-hall">Party Hall</option>
+                <option value="resort">Resort</option>
+                <option value="waterpark">Water Park</option>
+                <option value="hotel">Hotel</option>
             </select>
             <input type="number" id="members" placeholder="Number of Members" required>
-            <button onclick="searchHotels()">Search</button>
+            <button onclick="searchOptions()">Search</button>
         </div>
     </div>
 
-    <!-- Hotels/Cafes List Page -->
-    <div class="container" id="list-page" style="display: none;">
-        <div class="card">
-            <h1>Available Options</h1>
-            <div id="results"></div>
-            <button onclick="setReminder()">Set Reminder</button>
+    <!-- Results Page -->
+    <div class="container" id="results-page">
+        <div class="results" id="results"></div>
+    </div>
+
+    <!-- Details Page -->
+    <div class="container" id="details-page">
+        <div class="card" id="details-card">
+            <h1 id="details-title">Details</h1>
+            <div class="details-content">
+                <img id="details-image" src="" alt="">
+                <p id="details-description"></p>
+                <p><strong>Location:</strong> <span id="details-location"></span></p>
+                <p><strong>Contact:</strong> <span id="details-contact"></span></p>
+                <p><strong>Email:</strong> <span id="details-email"></span></p>
+                <p><strong>Menu:</strong> <span id="details-menu"></span></p>
+                <p><strong>Rating:</strong> <span id="details-rating"></span></p>
+                <p><strong>Reviews:</strong> <span id="details-reviews"></span></p>
+            </div>
         </div>
     </div>
+
+    <!-- Footer -->
+    <footer>
+        <p>&copy; 2025 Bookzii. All Rights Reserved. Designed with love.</p>
+    </footer>
 
     <script>
-        function showSignUpPage() {
-            document.getElementById('login-page').style.display = 'none';
-            document.getElementById('signup-page').style.display = 'flex';
+        function showPage(pageId) {
+            const pages = document.querySelectorAll('.container');
+            pages.forEach(page => page.classList.remove('active'));
+            document.getElementById(pageId).classList.add('active');
         }
 
         function login() {
-            // Placeholder for login logic
-            alert('Login Successful!');
-            document.getElementById('login-page').style.display = 'none';
-            document.getElementById('booking-page').style.display = 'flex';
+            const username = document.getElementById('username').value;
+            const password = document.getElementById('password').value;
+
+            if (!username || !password) {
+                alert('Please fill in both fields.');
+                return;
+            }
+
+            showPage('booking-page');
         }
 
-        function signUp() {
-            // Placeholder for sign-up logic
-            alert('Sign-Up Successful!');
-            document.getElementById('signup-page').style.display = 'none';
-            document.getElementById('login-page').style.display = 'flex';
+        function searchOptions() {
+            const bookingType = document.getElementById('booking-type').value;
+            const members = document.getElementById('members').value;
+
+            if (!members || members <= 0) {
+                alert('Please enter a valid number of members.');
+                return;
+            }
+
+            const options = {
+                table: [
+                    { name: 'Cozy Cafe', image: 'cafe1.jpg', description: 'Perfect for small groups.', location: 'Downtown', contact: '+91 1234567890', email: 'cozycafe@example.com', menu: 'Coffee, Snacks', rating: '4.5/5', reviews: 'Excellent ambiance and service.' },
+                    { name: 'Sunny Restaurant', image: 'cafe2.jpg', description: 'Great for a meal.', location: 'Uptown', contact: '+91 9876543210', email: 'sunnyresto@example.com', menu: 'Multi-cuisine', rating: '4.2/5', reviews: 'Tasty food and cozy atmosphere.' }
+                ],
+                resort: [
+                    { name: 'Luxury Resort', image: 'resort1.jpg', description: 'Relax and unwind.', location: 'Hilltop', contact: '+91 1122334455', email: 'luxuryresort@example.com', menu: 'Buffet, A La Carte', rating: '4.8/5', reviews: 'Amazing experience with top-notch facilities.' },
+                    { name: 'Eco Retreat', image: 'resort2.jpg', description: 'A peaceful escape.', location: 'Seaside', contact: '+91 9988776655', email: 'ecoretreat@example.com', menu: 'Vegetarian, Organic', rating: '4.6/5', reviews: 'Calm environment and eco-friendly.' }
+                ]
+            };
+
+            const resultsDiv = document.getElementById('results');
+            resultsDiv.innerHTML = options[bookingType]
+                .map(option => `
+                    <div class="result-card" onclick="viewDetails('${option.name}', '${option.image}', '${option.description}', '${option.location}', '${option.contact}', '${option.email}', '${option.menu}', '${option.rating}', '${option.reviews}')">
+                        <img src="${option.image}" alt="${option.name}">
+                        <h3>${option.name}</h3>
+                        <p>${option.description}</p>
+                    </div>
+                `)
+                .join('');
+
+            showPage('results-page');
         }
 
-        function searchHotels() {
-            // Placeholder for hotel search logic
-            document.getElementById('booking-page').style.display = 'none';
-            document.getElementById('list-page').style.display = 'flex';
+        function viewDetails(name, image, description, location, contact, email, menu, rating, reviews) {
+            document.getElementById('details-title').textContent = name;
+            document.getElementById('details-image').src = image;
+            document.getElementById('details-description').textContent = description;
+            document.getElementById('details-location').textContent = location;
+            document.getElementById('details-contact').textContent = contact;
+            document.getElementById('details-email').textContent = email;
+            document.getElementById('details-menu').textContent = menu;
+            document.getElementById('details-rating').textContent = rating;
+            document.getElementById('details-reviews').textContent = reviews;
 
-            // Example: Populate available hotels
-            document.getElementById('results').innerHTML = `
-                <p>Hotel A - Available</p>
-                <p>Hotel B - Available</p>
-                <p>Hotel C - Full</p>
-            `;
-        }
-
-        function setReminder() {
-            alert('Reminder set for 30 minutes before the booking time!');
+            showPage('details-page');
         }
     </script>
 </body>
