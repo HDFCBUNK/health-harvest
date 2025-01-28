@@ -3,162 +3,337 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Bookzii</title>
+    <title>Bookzii - Your Booking Companion</title>
     <style>
         body {
-            font-family: Arial, sans-serif;
+            font-family: 'Roboto', sans-serif;
             margin: 0;
             padding: 0;
-            /* background: url('cafe.jpg.jpg') no-repeat center center fixed; */
-            background-size: cover;
+            background: linear-gradient(to right, #ff9800, #ffc107);
+            color: #333;
+            overflow-x: hidden;
+        }
+
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 30px;
+            background: #333;
             color: #fff;
-         
-                background-image: url("cafe.jpg.jpg");
-                background-size: 100% 740;
-            
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
+        }
+
+        header .logo {
+            font-size: 1.8rem;
+            font-weight: bold;
+            color: #ff9800;
+        }
+
+        header nav a {
+            margin: 0 10px;
+            color: #fff;
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+
+        header nav a:hover {
+            color: #ff9800;
         }
 
         .container {
-            display: flex;
+            display: none;
             justify-content: center;
             align-items: center;
-            height: 100vh;
+            min-height: calc(100vh - 60px);
+            animation: fadeIn 0.5s ease-in-out;
+            text-align: center;
+            padding: 20px;
+        }
+
+        .container.active {
+            display: flex;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+            to {
+                opacity: 1;
+            }
         }
 
         .card {
-            background: rgba(0, 0, 0, 0.8);
+            background: rgba(255, 255, 255, 0.95);
             padding: 20px;
-            border-radius: 10px;
-            width: 300px;
-            text-align: center;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
-        }
-
-        .card h1 {
-            margin-bottom: 20px;
-            font-size: 2rem;
-        }
-
-        .card input {
+            border-radius: 12px;
+            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.2);
             width: 100%;
-            padding: 10px;
+            max-width: 400px;
+        }
+
+        .card input, .card select {
+            width: 100%;
             margin: 10px 0;
-            border: none;
-            border-radius: 5px;
+            padding: 12px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            font-size: 1rem;
         }
 
         .card button {
             width: 100%;
-            padding: 10px;
-            background: #ff5722;
+            padding: 12px;
+            background: #ff9800;
             border: none;
-            border-radius: 5px;
             color: #fff;
             font-size: 1rem;
+            font-weight: bold;
+            border-radius: 8px;
             cursor: pointer;
+            transition: background 0.3s;
         }
 
         .card button:hover {
-            background: #e64a19;
+            background: #e68900;
         }
 
-        .link {
-            color: #ff5722;
-            text-decoration: none;
+        footer {
+            background: #333;
+            color: #fff;
+            padding: 10px 0;
+            text-align: center;
+            font-size: 0.85rem;
+        }
+
+        .result {
+            margin: 20px 0;
+        }
+
+        .result h2 {
+            font-size: 1.8rem;
+            color: #ff9800;
+        }
+
+        .result p {
+            font-size: 1rem;
+            margin: 10px 0;
+        }
+
+        .result .available {
+            color: green;
+        }
+
+        .result .not-available {
+            color: red;
+        }
+
+        .back-btn {
+            padding: 10px 20px;
+            background: #333;
+            color: #fff;
+            border: none;
             font-size: 0.9rem;
+            border-radius: 8px;
+            cursor: pointer;
         }
 
-        .link:hover {
-            text-decoration: underline;
+        .back-btn:hover {
+            background: #555;
+        }
+
+        .result-card {
+            display: flex;
+            align-items: center;
+            background: #fff;
+            border-radius: 10px;
+            padding: 15px;
+            margin: 10px 0;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+            cursor: pointer;
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+        .result-card:hover {
+            transform: scale(1.02);
+            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.3);
+        }
+
+        .result-card img {
+            width: 80px; /* Set a fixed width */
+            height: 80px; /* Set a fixed height */
+            object-fit: cover; /* Ensures the image fits within the specified width and height */
+            border-radius: 8px;
+            margin-right: 15px;
+        }
+
+        .result-card h3 {
+            margin: 0;
+            font-size: 1.2rem;
+            color: #333;
+        }
+
+        .result-card p {
+            margin: 5px 0 0;
+            font-size: 0.9rem;
+            color: #666;
         }
     </style>
 </head>
 <body>
-    <!-- Login Page -->
+    <header>
+        <div class="logo">Bookzii</div>
+        <nav>
+            <a href="javascript:void(0)" onclick="showPage('home-page')">Home</a>
+            <a href="javascript:void(0)" onclick="showPage('contact-page')">Contact</a>
+            <a href="javascript:void(0)" onclick="showPage('signup-page')">Signup</a>
+            <a href="javascript:void(0)" onclick="showPage('login-page')">Login</a>
+        </nav>
+    </header>
+
+    <div class="container active" id="home-page">
+        <h1>Welcome to Bookzii</h1>
+        <p>Your ultimate booking companion for restaurants, rooms, and villas.</p>
+    </div>
+
+    <div class="container" id="contact-page">
+        <h2>Contact Us</h2>
+        <p>Email: contact@bookzii.com</p>
+        <p>Phone: +91 1234567890</p>
+    </div>
+
+    <div class="container" id="signup-page">
+        <div class="card">
+            <h2>Signup</h2>
+            <input type="text" id="signup-mobile-email" placeholder="Enter Mobile No. or Email ID">
+            <button onclick="signup()">Signup</button>
+        </div>
+    </div>
+
     <div class="container" id="login-page">
         <div class="card">
-            <h1>Bookzii</h1>
-            <input type="text" id="username" placeholder="Enter Username" required>
-            <input type="password" id="password" placeholder="Enter Password" required>
-            <p>Forgot passoward ?</p>
+            <h2>Login</h2>
+            <input type="text" id="login-username" placeholder="Enter Username">
+            <input type="password" id="login-password" placeholder="Enter Password">
             <button onclick="login()">Login</button>
-            <p><a href="#" class="link" onclick="showSignUpPage()">Don&#39;t have an account? Sign Up</a></p>
         </div>
     </div>
 
-    <!-- Sign-Up Page -->
-    <div class="container" id="signup-page" style="display: none;">
-        <div class="card">
-            <h1>Sign Up</h1>
-            <input type="email" id="email" placeholder="Enter Email" required>
-            <input type="text" id="mobile" placeholder="Enter Mobile Number" required>
-            <button onclick="sendVerificationCode()">Send Verification Code</button>
-            <input type="text" id="verification-code" placeholder="Enter Verification Code" required>
-            <input type="text" id="new-username" placeholder="Set Username" required>
-            <input type="password" id="new-password" placeholder="Set Password" required>
-            <button onclick="signUp()">Sign Up</button>
-            
-        </div>
-    </div>
-
-    <!-- Booking Page -->
-    <div class="container" id="booking-page" style="display: none;">
+    <div class="container" id="booking-page">
         <div class="card">
             <h1>Book Now</h1>
             <select id="booking-type">
-                <option value="room">Room</option>
                 <option value="table">Table</option>
-                <option value="party-hall">Party Hall</option>
+                <option value="resort">Resort</option>
+                <option value="waterpark">Water Park</option>
+                <option value="hotel">Hotel</option>
             </select>
             <input type="number" id="members" placeholder="Number of Members" required>
-            <button onclick="searchHotels()">Search</button>
+            <button onclick="searchOptions()">Search</button>
         </div>
     </div>
 
-    <!-- Hotels/Cafes List Page -->
-    <div class="container" id="list-page" style="display: none;">
-        <div class="card">
-            <h1>Available Options</h1>
-            <div id="results"></div>
-            <button onclick="setReminder()">Set Reminder</button>
+    <div class="container" id="results-page">
+        <div class="results" id="results"></div>
+    </div>
+
+    <div class="container" id="details-page">
+        <div class="card" id="details-card">
+            <h1 id="details-title">Details</h1>
+            <div class="details-content">
+                <img id="details-image" src="" alt="">
+                <p id="details-description"></p>
+                <p><strong>Location:</strong> <span id="details-location"></span></p>
+                <p><strong>Contact:</strong> <span id="details-contact"></span></p>
+                <p><strong>Email:</strong> <span id="details-email"></span></p>
+                <p><strong>Menu:</strong> <span id="details-menu"></span></p>
+                <p><strong>Rating:</strong> <span id="details-rating"></span></p>
+                <p><strong>Reviews:</strong> <span id="details-reviews"></span></p>
+            </div>
         </div>
     </div>
+
+    <footer>
+        <p>&copy; 2025 Bookzii. All Rights Reserved. Designed with love.</p>
+    </footer>
 
     <script>
-        function showSignUpPage() {
-            document.getElementById('login-page').style.display = 'none';
-            document.getElementById('signup-page').style.display = 'flex';
+        function showPage(pageId) {
+            const pages = document.querySelectorAll('.container');
+            pages.forEach(page => page.classList.remove('active'));
+            document.getElementById(pageId).classList.add('active');
         }
 
         function login() {
-            // Placeholder for login logic
-            alert('Login Successful!');
-            document.getElementById('login-page').style.display = 'none';
-            document.getElementById('booking-page').style.display = 'flex';
+            const username = document.getElementById('login-username').value;
+            const password = document.getElementById('login-password').value;
+
+            if (!username || !password) {
+                alert('Please fill in both fields.');
+                return;
+            }
+
+            if (username === 'mohit' && password === '123') {
+                alert('Login successful!');
+                showPage('booking-page');
+            } else {
+                alert('Invalid credentials. Please try again.');
+            }
         }
 
-        function signUp() {
-            // Placeholder for sign-up logic
-            alert('Sign-Up Successful!');
-            document.getElementById('signup-page').style.display = 'none';
-            document.getElementById('login-page').style.display = 'flex';
+        function searchOptions() {
+            const bookingType = document.getElementById('booking-type').value;
+            const members = document.getElementById('members').value;
+
+            if (!members || members <= 0) {
+                alert('Please enter a valid number of members.');
+                return;
+            }
+
+            const options = {
+                table: [
+                    { name: 'Cozy Cafe', image: 'cafe1.jpg', description: 'Perfect for small groups.', location: 'Downtown', contact: '+91 1234567890', email: 'cozycafe@example.com', menu: 'Coffee, Snacks', rating: '4.5/5', reviews: 'Excellent ambiance and service.' },
+                ],
+                resort: [
+                    { name: 'Luxury Resort', image: 'resort1.jpg', description: 'Relax and unwind.', location: 'Hilltop', contact: '+91 1122334455', email: 'luxuryresort@example.com', menu: 'Buffet, A La Carte', rating: '4.8/5', reviews: 'Amazing experience with top-notch facilities.' },
+                    { name: 'Eco Retreat', image: 'resort2.jpg', description: 'A peaceful escape.', location: 'Seaside', contact: '+91 9988776655', email: 'ecoretreat@example.com', menu: 'Vegetarian, Organic', rating: '4.6/5', reviews: 'Calm environment and eco-friendly.' }
+                ],
+                waterpark: [
+                    { name: 'Splash Waterpark', image: 'waterpark1.jpg', description: 'Fun for families and friends.', location: 'Beachside', contact: '+91 4433221100', email: 'splashpark@example.com', menu: 'Snacks, Drinks', rating: '4.7/5', reviews: 'Great water rides and clean facilities.' }
+                ],
+                hotel: [
+                    { name: 'Grand Hotel', image: 'hotel1.jpg', description: 'Luxury stay at the heart of the city.', location: 'City Center', contact: '+91 1122334455', email: 'grandhotel@example.com', menu: 'Continental, Buffet', rating: '4.8/5', reviews: 'Spacious rooms and excellent service.' }
+                ]
+            };
+
+            const resultsDiv = document.getElementById('results');
+            resultsDiv.innerHTML = options[bookingType]
+                .map(option => `
+                    <div class="result-card" onclick="viewDetails('${option.name}', '${option.image}', '${option.description}', '${option.location}', '${option.contact}', '${option.email}', '${option.menu}', '${option.rating}', '${option.reviews}')">
+                        <img src="${option.image}" alt="${option.name}">
+                        <h3>${option.name}</h3>
+                        <p>${option.description}</p>
+                    </div>
+                `)
+                .join('');
+
+            showPage('results-page');
         }
 
-        function searchHotels() {
-            // Placeholder for hotel search logic
-            document.getElementById('booking-page').style.display = 'none';
-            document.getElementById('list-page').style.display = 'flex';
+        function viewDetails(name, image, description, location, contact, email, menu, rating, reviews) {
+            document.getElementById('details-title').textContent = name;
+            document.getElementById('details-image').src = image;
+            document.getElementById('details-description').textContent = description;
+            document.getElementById('details-location').textContent = location;
+            document.getElementById('details-contact').textContent = contact;
+            document.getElementById('details-email').textContent = email;
+            document.getElementById('details-menu').textContent = menu;
+            document.getElementById('details-rating').textContent = rating;
+            document.getElementById('details-reviews').textContent = reviews;
 
-            // Example: Populate available hotels
-            document.getElementById('results').innerHTML = `
-                <p>Hotel A - Available</p>
-                <p>Hotel B - Available</p>
-                <p>Hotel C - Full</p>
-            `;
-        }
-
-        function setReminder() {
-            alert('Reminder set for 30 minutes before the booking time!');
+            showPage('details-page');
         }
     </script>
 </body>
