@@ -9,39 +9,33 @@
             font-family: 'Roboto', sans-serif;
             margin: 0;
             padding: 0;
-            background: url('cafe.jpg.jpg') no-repeat center center fixed;
-            background-size: cover;
+            background: linear-gradient(to right, #ff9800, #ffc107);
             color: #333;
+            overflow-x: hidden;
         }
 
         header {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: 20px 40px;
-            background: rgba(0, 0, 0, 0.85);
+            padding: 15px 30px;
+            background: #333;
             color: #fff;
             box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
         }
 
         header .logo {
-            font-size: 2rem;
+            font-size: 1.8rem;
             font-weight: bold;
             color: #ff9800;
         }
 
-        header nav {
-            display: flex;
-            gap: 25px;
-        }
-
         header nav a {
+            margin: 0 10px;
             color: #fff;
             text-decoration: none;
-            font-size: 1rem;
             font-weight: 500;
             transition: color 0.3s;
-            cursor: pointer;
         }
 
         header nav a:hover {
@@ -50,35 +44,40 @@
 
         .container {
             display: none;
-            flex-direction: column;
             justify-content: center;
             align-items: center;
-            min-height: calc(100vh - 100px);
+            min-height: calc(100vh - 60px);
+            animation: fadeIn 0.5s ease-in-out;
+            text-align: center;
+            padding: 20px;
         }
 
         .container.active {
             display: flex;
         }
 
-        .card {
-            background: rgba(255, 255, 255, 0.9);
-            padding: 30px;
-            border-radius: 12px;
-            width: 350px;
-            text-align: center;
-            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.2);
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+            to {
+                opacity: 1;
+            }
         }
 
-        .card h1 {
-            margin-bottom: 20px;
-            font-size: 2.5rem;
-            color: #ff9800;
+        .card {
+            background: rgba(255, 255, 255, 0.95);
+            padding: 20px;
+            border-radius: 12px;
+            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.2);
+            width: 100%;
+            max-width: 400px;
         }
 
         .card input, .card select {
             width: 100%;
+            margin: 10px 0;
             padding: 12px;
-            margin: 15px 0;
             border: 1px solid #ddd;
             border-radius: 8px;
             font-size: 1rem;
@@ -89,10 +88,10 @@
             padding: 12px;
             background: #ff9800;
             border: none;
-            border-radius: 8px;
             color: #fff;
-            font-size: 1.1rem;
+            font-size: 1rem;
             font-weight: bold;
+            border-radius: 8px;
             cursor: pointer;
             transition: background 0.3s;
         }
@@ -101,117 +100,263 @@
             background: #e68900;
         }
 
-        .results {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 25px;
-            justify-content: center;
-            padding: 20px;
-            width: 100%;
-        }
-
-        .result-card {
-            background: #fff;
-            padding: 20px;
-            border-radius: 12px;
-            width: 280px;
+        footer {
+            background: #333;
+            color: #fff;
+            padding: 10px 0;
             text-align: center;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
-            transition: transform 0.3s, box-shadow 0.3s;
-            cursor: pointer;
+            font-size: 0.85rem;
         }
 
-        .result-card img {
-            width: 100%;
-            border-radius: 12px;
-            margin-bottom: 10px;
+        .result {
+            margin: 20px 0;
         }
 
-        .result-card h3 {
-            margin: 10px 0;
+        .result h2 {
+            font-size: 1.8rem;
             color: #ff9800;
         }
 
-        .result-card:hover {
-            transform: scale(1.05);
-            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.2);
+        .result p {
+            font-size: 1rem;
+            margin: 10px 0;
         }
 
-        footer {
-            background: rgba(0, 0, 0, 0.85);
+        .result .available {
+            color: green;
+        }
+
+        .result .not-available {
+            color: red;
+        }
+
+        .back-btn {
+            padding: 10px 20px;
+            background: #333;
             color: #fff;
-            text-align: center;
-            padding: 15px 20px;
+            border: none;
             font-size: 0.9rem;
-            box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.5);
+            border-radius: 8px;
+            cursor: pointer;
         }
 
-        .details-content img {
-            max-width: 100%;
-            border-radius: 12px;
-            margin-bottom: 10px;
+        .back-btn:hover {
+            background: #555;
         }
+
+        .result-card {
+            display: flex;
+            align-items: center;
+            background: #fff;
+            border-radius: 10px;
+            padding: 15px;
+            margin: 10px 0;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+            cursor: pointer;
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+        .result-card:hover {
+            transform: scale(1.02);
+            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.3);
+        }
+
+        .result-card img {
+            width: 80px;
+            height: 80px;
+            border-radius: 8px;
+            margin-right: 15px;
+        }
+
+        .result-card h3 {
+            margin: 0;
+            font-size: 1.2rem;
+            color: #333;
+        }
+
+        .result-card p {
+            margin: 5px 0 0;
+            font-size: 0.9rem;
+            color: #666;
+        }
+        @media (max-width: 768px) {
+    header {
+        flex-direction: column;
+        text-align: center;
+        padding: 10px;
+    }
+
+    header nav {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+
+    header nav a {
+        display: block;
+        margin: 5px 0;
+    }
+
+    .container {
+        padding: 10px;
+        text-align: center;
+    }
+
+    .card {
+        width: 90%;
+        max-width: 100%;
+        padding: 15px;
+    }
+
+    .result-card {
+        flex-direction: column;
+        text-align: center;
+    }
+
+    .result-card img {
+        width: 100%;
+        max-width: 250px;
+        height: auto;
+        margin-bottom: 10px;
+    }
+
+    .details-content img {
+        width: 100%;
+        max-width: 300px;
+        height: auto;
+    }
+}
+input, select, button {
+    width: 100%;
+    max-width: 100%;
+    font-size: 1rem;
+}
     </style>
 </head>
 <body>
-    <!-- Header -->
     <header>
         <div class="logo">Bookzii</div>
         <nav>
-            <a onclick="showPage('login-page')">Home</a>
-            <a onclick="showPage('contact-page')">Contact</a>
-            <a onclick="showPage('about-page')">About</a>
-            <a onclick="showPage('login-page')">Login</a>
+            <a href="javascript:void(0)" onclick="showPage('home-page')">Home</a>
+            <a href="javascript:void(0)" onclick="showPage('contact-page')">Contact</a>
+            <a href="javascript:void(0)" onclick="showPage('signup-page')">Signup</a>
+            <a href="javascript:void(0)" onclick="showPage('login-page')">Login</a>
         </nav>
     </header>
 
-    <!-- Login Page -->
-    <div class="container active" id="login-page">
+    <div class="container active" id="home-page">
+        <h1>Welcome to Bookzii</h1>
+        <p>Your ultimate booking companion for restaurants, rooms, water park and villas.</p>
+    </div>
+
+    <div class="container" id="contact-page">
+        <h2>Contact Us</h2>
+        <p>Email: contact@bookzii.com</p>
+        <p>Phone: +91 1234567890</p>
+    </div>
+
+<body>
+    <div class="container active" id="signup-page">
         <div class="card">
-            <h1>Login</h1>
-            <input type="text" id="username" placeholder="Enter Username" required>
-            <input type="password" id="password" placeholder="Enter Password" required>
+            <h2>Signup</h2>
+            <input type="text" id="signup-mobile-email" placeholder="Enter Mobile No. or Email ID">
+            <button onclick="sendVerificationCode()">Signup</button>
+        </div>
+    </div>
+
+    <div class="container" id="verification-page">
+        <div class="card">
+            <h2>Enter Verification Code</h2>
+            <input type="text" id="verification-code" placeholder="Enter Code">
+            <button onclick="verifyCode()">Verify</button>
+        </div>
+    </div>
+
+    <div class="container" id="create-account-page">
+        <div class="card">
+            <h2>Create Account</h2>
+            <input type="text" id="new-username" placeholder="Enter Username">
+            <input type="password" id="new-password" placeholder="Enter Password">
+            <button onclick="createAccount()">Create Account</button>
+        </div>
+    </div>
+
+    <div class="container" id="booking-page">
+        <div class="card">
+            <h1>Book Now</h1>
+            <p>Welcome to the booking page!</p>
+        </div>
+    </div>
+
+    <script>
+        function showPage(pageId) {
+            document.querySelectorAll('.container').forEach(page => page.classList.remove('active'));
+            document.getElementById(pageId).classList.add('active');
+        }
+
+        function sendVerificationCode() {
+            const input = document.getElementById('signup-mobile-email').value;
+            if (!input) {
+                alert('Please enter your mobile number or email.');
+                return;
+            }
+            alert('A verification code has been sent to ' + input);
+            showPage('verification-page');
+        }
+
+        function verifyCode() {
+            const code = document.getElementById('verification-code').value;
+            if (!code) {
+                alert('Please enter the verification code.');
+                return;
+            }
+            alert('Verification successful!');
+            showPage('create-account-page');
+        }
+
+        function createAccount() {
+            const username = document.getElementById('new-username').value;
+            const password = document.getElementById('new-password').value;
+            if (!username || !password) {
+                alert('Please enter a username and password.');
+                return;
+            }
+            alert('Account created successfully!');
+            showPage('booking-type');
+        }
+    </script>
+</body>
+    
+    <div class="container" id="login-page">
+        <div class="card">
+            <h2>Login</h2>
+            <input type="text" id="login-username" placeholder="Enter Username">
+            <input type="password" id="login-password" placeholder="Enter Password">
             <button onclick="login()">Login</button>
         </div>
     </div>
 
-    <!-- Contact Page -->
-    <div class="container" id="contact-page">
-        <div class="card">
-            <h1>Contact Us</h1>
-            <p>For inquiries, email us at support@bookzii.com or call +91 8690873446</p>
-        </div>
-    </div>
-
-    <!-- About Page -->
-    <div class="container" id="about-page">
-        <div class="card">
-            <h1>About Bookzii</h1>
-            <p>Bookzii is your ultimate booking companion for tables, hotels, resorts, and more.</p>
-        </div>
-    </div>
-
-    <!-- Booking Page -->
-    <div class="container" id="booking-page">
+    <div class="container" id="booking-type">
         <div class="card">
             <h1>Book Now</h1>
-            <select id="booking-type">
+
+            <select id="booking-type-select">
                 <option value="table">Table</option>
                 <option value="resort">Resort</option>
                 <option value="waterpark">Water Park</option>
                 <option value="hotel">Hotel</option>
             </select>
+            
+
             <input type="number" id="members" placeholder="Number of Members" required>
             <button onclick="searchOptions()">Search</button>
         </div>
     </div>
 
-    <!-- Results Page -->
     <div class="container" id="results-page">
         <div class="results" id="results"></div>
     </div>
 
-    <!-- Details Page -->
     <div class="container" id="details-page">
         <div class="card" id="details-card">
             <h1 id="details-title">Details</h1>
@@ -228,7 +373,6 @@
         </div>
     </div>
 
-    <!-- Footer -->
     <footer>
         <p>&copy; 2025 Bookzii. All Rights Reserved. Designed with love.</p>
     </footer>
@@ -241,50 +385,71 @@
         }
 
         function login() {
-            const username = document.getElementById('username').value;
-            const password = document.getElementById('password').value;
+            const username = document.getElementById('login-username').value;
+            const password = document.getElementById('login-password').value;
 
             if (!username || !password) {
                 alert('Please fill in both fields.');
                 return;
             }
 
-            showPage('booking-page');
-        }
-
-        function searchOptions() {
-            const bookingType = document.getElementById('booking-type').value;
-            const members = document.getElementById('members').value;
-
-            if (!members || members <= 0) {
-                alert('Please enter a valid number of members.');
-                return;
+            if (username === 'mohit' && password === '123') {
+                alert('Login successful!');
+                showPage('booking-type');
+            } else {
+                alert('Invalid credentials. Please try again.');
             }
-
-            const options = {
-                table: [
-                    { name: 'Cozy Cafe', image: 'cafe1.jpg', description: 'Perfect for small groups.', location: 'Downtown', contact: '+91 1234567890', email: 'cozycafe@example.com', menu: 'Coffee, Snacks', rating: '4.5/5', reviews: 'Excellent ambiance and service.' },
-                    { name: 'Sunny Restaurant', image: 'cafe2.jpg', description: 'Great for a meal.', location: 'Uptown', contact: '+91 9876543210', email: 'sunnyresto@example.com', menu: 'Multi-cuisine', rating: '4.2/5', reviews: 'Tasty food and cozy atmosphere.' }
-                ],
-                resort: [
-                    { name: 'Luxury Resort', image: 'resort1.jpg', description: 'Relax and unwind.', location: 'Hilltop', contact: '+91 1122334455', email: 'luxuryresort@example.com', menu: 'Buffet, A La Carte', rating: '4.8/5', reviews: 'Amazing experience with top-notch facilities.' },
-                    { name: 'Eco Retreat', image: 'resort2.jpg', description: 'A peaceful escape.', location: 'Seaside', contact: '+91 9988776655', email: 'ecoretreat@example.com', menu: 'Vegetarian, Organic', rating: '4.6/5', reviews: 'Calm environment and eco-friendly.' }
-                ]
-            };
-
-            const resultsDiv = document.getElementById('results');
-            resultsDiv.innerHTML = options[bookingType]
-                .map(option => `
-                    <div class="result-card" onclick="viewDetails('${option.name}', '${option.image}', '${option.description}', '${option.location}', '${option.contact}', '${option.email}', '${option.menu}', '${option.rating}', '${option.reviews}')">
-                        <img src="${option.image}" alt="${option.name}">
-                        <h3>${option.name}</h3>
-                        <p>${option.description}</p>
-                    </div>
-                `)
-                .join('');
-
-            showPage('results-page');
         }
+
+
+function searchOptions() {
+    const bookingType = document.getElementById('booking-type-select').value; // Use the correct ID
+    const members = document.getElementById('members').value;
+
+    if (!members || members <= 0) {
+        alert('Please enter a valid number of members.');
+        return;
+    }
+
+    const options = {
+        table: [
+            { name: 'Cozy Cafe', image: 'cafe1.jpg', description: 'Perfect for small groups.', location: 'Downtown', contact: '+91 1234567890', email: 'cozycafe@example.com', menu: 'Coffee, Snacks', rating: '4.5/5', reviews: 'Excellent ambiance and service.' },
+            { name: 'Sunny Restaurant', image: 'cafe img5.jpg', description: 'Great for a meal.', location: 'Uptown', contact: '+91 9876543210', email: 'sunnyresto@example.com', menu: 'Multi-cuisine', rating: '4.2/5', reviews: 'Tasty food and cozy atmosphere.' }
+        ],
+        resort: [
+            { name: 'Luxury Resort', image: 'resort2.jpg', description: 'Relax and unwind.', location: 'Hilltop', contact: '+91 1122334455', email: 'luxuryresort@example.com', menu: 'Buffet, A La Carte', rating: '4.8/5', reviews: 'Amazing experience with top-notch facilities.' },
+            { name: 'Eco Retreat', image: 'resort4.jpg', description: 'A peaceful escape.', location: 'Seaside', contact: '+91 9988776655', email: 'ecoretreat@example.com', menu: 'Vegetarian, Organic', rating: '4.6/5', reviews: 'Calm environment and eco-friendly.' }
+        ],
+        waterpark: [
+            { name: 'Splash World', image: 'waterpark1.jpg', description: 'Fun water rides for all ages.', location: 'City Center', contact: '+91 5566778899', email: 'splashworld@example.com', menu: 'Snacks, Fast Food', rating: '4.3/5', reviews: 'Great fun for families and kids.' }
+        ],
+        hotel: [
+            { name: 'Grand Hotel', image: 'hotel1.jpg', description: '5-star comfort and luxury.', location: 'Downtown', contact: '+91 2233445566', email: 'grandhotel@example.com', menu: 'Buffet, Room Service', rating: '4.7/5', reviews: 'Luxurious stay with great amenities.' }
+        ]
+    };
+
+    const resultsDiv = document.getElementById('results');
+    resultsDiv.innerHTML = '';
+
+    if (options[bookingType] && options[bookingType].length > 0) {
+        resultsDiv.innerHTML = options[bookingType]
+            .map(option => `
+                <div class="result-card" onclick="viewDetails('${option.name}', '${option.image}', '${option.description}', '${option.location}', '${option.contact}', '${option.email}', '${option.menu}', '${option.rating}', '${option.reviews}')">
+                    <img src="${option.image}" alt="${option.name}">
+                    <h3>${option.name}</h3>
+                    <p>${option.description}</p>
+                </div>
+            `)
+            .join('');
+    } else {
+        resultsDiv.innerHTML = '<p style="color: red; font-size: 1.2rem;">No options available for this selection.</p>';
+    }
+
+    showPage('results-page');
+}
+
+
+
 
         function viewDetails(name, image, description, location, contact, email, menu, rating, reviews) {
             document.getElementById('details-title').textContent = name;
