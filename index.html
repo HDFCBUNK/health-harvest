@@ -1,469 +1,666 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Bookzii - Your Booking Companion</title>
+    <title>BookZii - Your Booking Platform</title>
     <style>
-        body {
-            font-family: 'Roboto', sans-serif;
+        * {
             margin: 0;
             padding: 0;
-            background: linear-gradient(to right, #ff9800, #ffc107);
-            color: #333;
-            overflow-x: hidden;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
         }
-
+        
+        body {
+            background-color: #f5f5f5;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
         header {
+            background-color: #2c3e50;
+            color: white;
+            padding: 20px 0;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+        
+        .header-content {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: 15px 30px;
-            background: #333;
-            color: #fff;
-            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
         }
-
-        header .logo {
-            font-size: 1.8rem;
+        
+        .logo {
+            font-size: 28px;
             font-weight: bold;
-            color: #ff9800;
+            color: #3498db;
+            text-decoration: none;
         }
-
-        header nav a {
-            margin: 0 10px;
-            color: #fff;
+        
+        .nav-links {
+            display: flex;
+            gap: 20px;
+        }
+        
+        .nav-links a {
+            color: white;
+            text-decoration: none;
+            font-size: 16px;
+            transition: color 0.3s;
+        }
+        
+        .nav-links a:hover {
+            color: #3498db;
+        }
+        
+        .hero {
+            height: 500px;
+            background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('/api/placeholder/1200/500');
+            background-size: cover;
+            background-position: center;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            color: white;
+            text-align: center;
+        }
+        
+        .hero h1 {
+            font-size: 48px;
+            margin-bottom: 20px;
+        }
+        
+        .hero p {
+            font-size: 20px;
+            margin-bottom: 30px;
+            max-width: 700px;
+        }
+        
+        .btn {
+            padding: 12px 24px;
+            background-color: #3498db;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+            font-weight: bold;
+            transition: background-color 0.3s;
+        }
+        
+        .btn:hover {
+            background-color: #2980b9;
+        }
+        
+        .booking-options {
+            padding: 60px 0;
+        }
+        
+        .options-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 30px;
+            margin-top: 40px;
+        }
+        
+        .option-card {
+            background-color: white;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+        
+        .option-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+        }
+        
+        .option-image {
+            height: 200px;
+            background-size: cover;
+            background-position: center;
+        }
+        
+        .option-info {
+            padding: 20px;
+        }
+        
+        .option-info h3 {
+            margin-bottom: 10px;
+            color: #2c3e50;
+        }
+        
+        .option-info p {
+            color: #7f8c8d;
+            margin-bottom: 15px;
+        }
+        
+        section.section-title {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+        
+        section.section-title h2 {
+            font-size: 36px;
+            color: #2c3e50;
+            margin-bottom: 15px;
+        }
+        
+        section.section-title p {
+            color: #7f8c8d;
+            max-width: 700px;
+            margin: 0 auto;
+        }
+        
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.7);
+            z-index: 1000;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .modal-content {
+            background-color: white;
+            border-radius: 8px;
+            max-width: 500px;
+            width: 100%;
+            padding: 30px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            position: relative;
+            margin: 20px;
+        }
+        
+        .close-modal {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            font-size: 24px;
+            color: #95a5a6;
+            background: none;
+            border: none;
+            cursor: pointer;
+        }
+        
+        .form-group {
+            margin-bottom: 20px;
+        }
+        
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            color: #2c3e50;
+            font-weight: 500;
+        }
+        
+        .form-group input, .form-group select, .form-group textarea {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 16px;
+        }
+        
+        .form-group textarea {
+            min-height: 100px;
+            resize: vertical;
+        }
+        
+        .form-title {
+            font-size: 24px;
+            color: #2c3e50;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+        
+        .verification-section {
+            display: none;
+        }
+        
+        .booking-type-section, .members-section, .results-section {
+            display: none;
+        }
+        
+        .booking-result {
+            background-color: white;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            margin-bottom: 20px;
+        }
+        
+        .booking-result-image {
+            height: 250px;
+            background-size: cover;
+            background-position: center;
+        }
+        
+        .booking-result-info {
+            padding: 20px;
+        }
+        
+        .booking-result-info h3 {
+            margin-bottom: 10px;
+            color: #2c3e50;
+        }
+        
+        .booking-result-info p {
+            color: #7f8c8d;
+            margin-bottom: 15px;
+        }
+        
+        .detail-view {
+            display: none;
+            padding: 40px 0;
+        }
+        
+        .detail-images {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 15px;
+            margin-bottom: 30px;
+        }
+        
+        .detail-image {
+            height: 200px;
+            background-size: cover;
+            background-position: center;
+            border-radius: 8px;
+        }
+        
+        .detail-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 0;
+            border-bottom: 1px solid #ddd;
+            margin-bottom: 30px;
+        }
+        
+        .detail-header-links {
+            display: flex;
+            gap: 20px;
+        }
+        
+        .detail-header-links a {
+            color: #2c3e50;
             text-decoration: none;
             font-weight: 500;
             transition: color 0.3s;
         }
-
-        header nav a:hover {
-            color: #ff9800;
+        
+        .detail-header-links a:hover {
+            color: #3498db;
         }
-
-        .container {
-            display: none;
-            justify-content: center;
-            align-items: center;
-            min-height: calc(100vh - 60px);
-            animation: fadeIn 0.5s ease-in-out;
-            text-align: center;
+        
+        .detail-description {
+            margin-bottom: 30px;
+        }
+        
+        .detail-description h3 {
+            font-size: 24px;
+            color: #2c3e50;
+            margin-bottom: 15px;
+        }
+        
+        .detail-description p {
+            color: #7f8c8d;
+            line-height: 1.6;
+        }
+        
+        .detail-timing {
+            background-color: #f8f9fa;
             padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 30px;
         }
-
-        .container.active {
+        
+        .detail-timing h3 {
+            font-size: 20px;
+            color: #2c3e50;
+            margin-bottom: 15px;
+        }
+        
+        .timing-list {
+            list-style: none;
+        }
+        
+        .timing-list li {
             display: flex;
-        }
-
-        @keyframes fadeIn {
-            from {
-                opacity: 0;
-            }
-            to {
-                opacity: 1;
-            }
-        }
-
-        .card {
-            background: rgba(255, 255, 255, 0.95);
-            padding: 20px;
-            border-radius: 12px;
-            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.2);
-            width: 100%;
-            max-width: 400px;
-        }
-
-        .card input, .card select {
-            width: 100%;
-            margin: 10px 0;
-            padding: 12px;
-            border: 1px solid #ddd;
-            border-radius: 8px;
-            font-size: 1rem;
-        }
-
-        .card button {
-            width: 100%;
-            padding: 12px;
-            background: #ff9800;
-            border: none;
-            color: #fff;
-            font-size: 1rem;
-            font-weight: bold;
-            border-radius: 8px;
-            cursor: pointer;
-            transition: background 0.3s;
-        }
-
-        .card button:hover {
-            background: #e68900;
-        }
-
-        footer {
-            background: #333;
-            color: #fff;
+            justify-content: space-between;
             padding: 10px 0;
+            border-bottom: 1px solid #ddd;
+        }
+        
+        .timing-list li:last-child {
+            border-bottom: none;
+        }
+        
+        footer {
+            background-color: #2c3e50;
+            color: white;
+            padding: 50px 0 20px;
+        }
+        
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 30px;
+            margin-bottom: 30px;
+        }
+        
+        .footer-column h3 {
+            font-size: 18px;
+            margin-bottom: 20px;
+            color: #3498db;
+        }
+        
+        .footer-column ul {
+            list-style: none;
+        }
+        
+        .footer-column ul li {
+            margin-bottom: 10px;
+        }
+        
+        .footer-column ul li a {
+            color: #bdc3c7;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+        
+        .footer-column ul li a:hover {
+            color: white;
+        }
+        
+        .footer-bottom {
             text-align: center;
-            font-size: 0.85rem;
+            padding-top: 20px;
+            border-top: 1px solid #34495e;
         }
-
-        .result {
-            margin: 20px 0;
+        
+        .footer-bottom p {
+            color: #bdc3c7;
+            font-size: 14px;
         }
-
-        .result h2 {
-            font-size: 1.8rem;
-            color: #ff9800;
-        }
-
-        .result p {
-            font-size: 1rem;
-            margin: 10px 0;
-        }
-
-        .result .available {
-            color: green;
-        }
-
-        .result .not-available {
-            color: red;
-        }
-
-        .back-btn {
-            padding: 10px 20px;
-            background: #333;
-            color: #fff;
-            border: none;
-            font-size: 0.9rem;
-            border-radius: 8px;
-            cursor: pointer;
-        }
-
-        .back-btn:hover {
-            background: #555;
-        }
-
-        .result-card {
-            display: flex;
-            align-items: center;
-            background: #fff;
-            border-radius: 10px;
-            padding: 15px;
-            margin: 10px 0;
-            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
-            cursor: pointer;
-            transition: transform 0.3s, box-shadow 0.3s;
-        }
-
-        .result-card:hover {
-            transform: scale(1.02);
-            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.3);
-        }
-
-        .result-card img {
-            width: 80px;
-            height: 80px;
-            border-radius: 8px;
-            margin-right: 15px;
-        }
-
-        .result-card h3 {
-            margin: 0;
-            font-size: 1.2rem;
-            color: #333;
-        }
-
-        .result-card p {
-            margin: 5px 0 0;
-            font-size: 0.9rem;
-            color: #666;
-        }
+        
         @media (max-width: 768px) {
-    header {
-        flex-direction: column;
-        text-align: center;
-        padding: 10px;
-    }
-
-    header nav {
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-    }
-
-    header nav a {
-        display: block;
-        margin: 5px 0;
-    }
-
-    .container {
-        padding: 10px;
-        text-align: center;
-    }
-
-    .card {
-        width: 90%;
-        max-width: 100%;
-        padding: 15px;
-    }
-
-    .result-card {
-        flex-direction: column;
-        text-align: center;
-    }
-
-    .result-card img {
-        width: 100%;
-        max-width: 250px;
-        height: auto;
-        margin-bottom: 10px;
-    }
-
-    .details-content img {
-        width: 100%;
-        max-width: 300px;
-        height: auto;
-    }
-}
-input, select, button {
-    width: 100%;
-    max-width: 100%;
-    font-size: 1rem;
-}
+            .hero h1 {
+                font-size: 36px;
+            }
+            
+            .hero p {
+                font-size: 16px;
+            }
+            
+            .nav-links {
+                gap: 15px;
+            }
+            
+            .detail-images {
+                grid-template-columns: 1fr;
+            }
+        }
+        
+        /* Success message styles */
+        .success-message {
+            background-color: #2ecc71;
+            color: white;
+            padding: 15px;
+            border-radius: 4px;
+            margin-bottom: 20px;
+            text-align: center;
+        }
     </style>
 </head>
 <body>
+    <!-- Header -->
     <header>
-        <div class="logo">Bookzii</div>
-        <nav>
-            <a href="javascript:void(0)" onclick="showPage('home-page')">Home</a>
-            <a href="javascript:void(0)" onclick="showPage('contact-page')">Contact</a>
-            <a href="javascript:void(0)" onclick="showPage('signup-page')">Signup</a>
-            <a href="javascript:void(0)" onclick="showPage('login-page')">Login</a>
-        </nav>
+        <div class="container header-content">
+            <a href="#" class="logo" onclick="showHomePage()">BookZii</a>
+            <div class="nav-links">
+                <a href="#" onclick="showHomePage()">Home</a>
+                <a href="login..html">Login</a>
+                <a href="signup.html">Signup</a>
+                <a href="contact.html">contact</a>
+            </div>
+        </div>
     </header>
 
-    <div class="container active" id="home-page">
-        <h1>Welcome to Bookzii</h1>
-        <p>Your ultimate booking companion for restaurants, rooms, water park and villas.</p>
-    </div>
+    <!-- Main Content -->
+    <main>
+        <!-- Home Page -->
+        <div id="home-page">
+            <!-- Hero Section -->
+            <section class="hero">
+                <div class="container">
+                    <h1>Book Your Perfect Getaway</h1>
+                    <p>Find and reserve the best tables, resorts, rooms, and water parks with BookZii - your one-stop booking platform.</p>
+                    <button class="btn" onclick="openSignupModal()">Get Started</button>
+                </div>
+            </section>
 
-    <div class="container" id="contact-page">
-        <h2>Contact Us</h2>
-        <p>Email: contact@bookzii.com</p>
-        <p>Phone: +91 1234567890</p>
-    </div>
-
-<body>
-    <div class="container active" id="signup-page">
-        <div class="card">
-            <h2>Signup</h2>
-            <input type="text" id="signup-mobile-email" placeholder="Enter Mobile No. or Email ID">
-            <button onclick="sendVerificationCode()">Signup</button>
+            <!-- Booking Options -->
+            <section class="booking-options">
+                <div class="container">
+                    <div class="section-title">
+                        <h2>What Would You Like to Book?</h2>
+                        <p>Choose from our wide range of booking options to create the perfect experience.</p>
+                    </div>
+                    <div class="options-container">
+                        <div class="option-card">
+                            <div class="option-image" style="background-image: url('images/cafe.jpg.jpg')"></div>
+                            <div class="option-info">
+                                <h3>Table Reservations</h3>
+                                <p>Reserve tables at the finest restaurants and cafes.</p>
+                                <button class="btn" onclick="openSignupModal('table')">Book Now</button>
+                            </div>
+                        </div>
+                        <div class="option-card">
+                            <div class="option-image" style="background-image: url('images/resort cloud.jpg')"></div>
+                            <div class="option-info">
+                                <h3>Resort Bookings</h3>
+                                <p>Find the perfect resort for your vacation or event.</p>
+                                <button class="btn" onclick="openSignupModal('resort')">Book Now</button>
+                            </div>
+                        </div>
+                        <div class="option-card">
+                            <div class="option-image" style="background-image: url('images/room cloud.jpg')"></div>
+                            <div class="option-info">
+                                <h3>Room Reservations</h3>
+                                <p>Book comfortable and luxurious rooms for your stay.</p>
+                                <button class="btn" onclick="openSignupModal('room')">Book Now</button>
+                            </div>
+                        </div>
+                        <div class="option-card">
+                            <div class="option-image" style="background-image: url('images/water park cloud.jpg')"></div>
+                            <div class="option-info">
+                                <h3>Water Park Passes</h3>
+                                <p>Get passes to the most exciting water parks.</p>
+                                <button class="btn" onclick="openSignupModal('waterpark')">Book Now</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
         </div>
-    </div>
 
-    <div class="container" id="verification-page">
-        <div class="card">
-            <h2>Enter Verification Code</h2>
-            <input type="text" id="verification-code" placeholder="Enter Code">
-            <button onclick="verifyCode()">Verify</button>
+        <!-- Booking Results Page -->
+        <div id="results-page" style="display: none">
+            <div class="container" style="padding: 40px 0">
+                <h2 style="margin-bottom: 30px">Available Options</h2>
+                <div id="results-container">
+                    <!-- Results will be populated here -->
+                </div>
+            </div>
         </div>
-    </div>
 
-    <div class="container" id="create-account-page">
-        <div class="card">
-            <h2>Create Account</h2>
-            <input type="text" id="new-username" placeholder="Enter Username">
-            <input type="password" id="new-password" placeholder="Enter Password">
-            <button onclick="createAccount()">Create Account</button>
+        <!-- Detail View Page -->
+        <div id="detail-page" style="display: none">
+            <div class="container">
+                <div id="detail-container">
+                    <!-- Detail content will be populated here -->
+                </div>
+            </div>
         </div>
-    </div>
+    </main>
 
-    <div class="container" id="booking-page">
-        <div class="card">
-            <h1>Book Now</h1>
-            <p>Welcome to the booking page!</p>
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-column">
+                    <h3>BookZii</h3>
+                    <ul>
+                        <li><a href="#" onclick="showHomePage()">Home</a></li>
+                        <li><a href="#" onclick="openLoginModal()">Login</a></li>
+                        <li><a href="#" onclick="openSignupModal()">Signup</a></li>
+                        <li><a href="#" onclick="openContactModal()">Contact</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h3>Booking Options</h3>
+                    <ul>
+                        <li><a href="#" onclick="openSignupModal('table')">Table Reservations</a></li>
+                        <li><a href="#" onclick="openSignupModal('resort')">Resort Bookings</a></li>
+                        <li><a href="#" onclick="openSignupModal('room')">Room Reservations</a></li>
+                        <li><a href="#" onclick="openSignupModal('waterpark')">Water Park Passes</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h3>Support</h3>
+                    <ul>
+                        <li><a href="#" onclick="openContactModal()">Contact Us</a></li>
+                        <li><a href="#">FAQ</a></li>
+                        <li><a href="#">Terms of Service</a></li>
+                        <li><a href="#">Privacy Policy</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h3>Connect With Us</h3>
+                    <ul>
+                        <li><a href="#">Facebook</a></li>
+                        <li><a href="#">Twitter</a></li>
+                        <li><a href="#">Instagram</a></li>
+                        <li><a href="#">LinkedIn</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2025 BookZii. All rights reserved.</p>
+            </div>
         </div>
-    </div>
+    </footer>
 
-    <script>
-        function showPage(pageId) {
-            document.querySelectorAll('.container').forEach(page => page.classList.remove('active'));
-            document.getElementById(pageId).classList.add('active');
-        }
-
-        function sendVerificationCode() {
-            const input = document.getElementById('signup-mobile-email').value;
-            if (!input) {
-                alert('Please enter your mobile number or email.');
-                return;
-            }
-            alert('A verification code has been sent to ' + input);
-            showPage('verification-page');
-        }
-
-        function verifyCode() {
-            const code = document.getElementById('verification-code').value;
-            if (!code) {
-                alert('Please enter the verification code.');
-                return;
-            }
-            alert('Verification successful!');
-            showPage('create-account-page');
-        }
-
-        function createAccount() {
-            const username = document.getElementById('new-username').value;
-            const password = document.getElementById('new-password').value;
-            if (!username || !password) {
-                alert('Please enter a username and password.');
-                return;
-            }
-            alert('Account created successfully!');
-            showPage('booking-type');
-        }
-    </script>
-</body>
-    
-    <div class="container" id="login-page">
-        <div class="card">
-            <h2>Login</h2>
-            <input type="text" id="login-username" placeholder="Enter Username">
-            <input type="password" id="login-password" placeholder="Enter Password">
-            <button onclick="login()">Login</button>
-        </div>
-    </div>
-
-    <div class="container" id="booking-type">
-        <div class="card">
-            <h1>Book Now</h1>
-
-            <select id="booking-type-select">
-                <option value="table">Table</option>
-                <option value="resort">Resort</option>
-                <option value="waterpark">Water Park</option>
-                <option value="hotel">Hotel</option>
-            </select>
+    <!-- Modals -->
+    <!-- Signup Modal -->
+    <div id="signup-modal" class="modal">
+        <div class="modal-content">
+            <button class="close-modal" onclick="closeModal('signup-modal')">&times;</button>
             
-
-            <input type="number" id="members" placeholder="Number of Members" required>
-            <button onclick="searchOptions()">Search</button>
-        </div>
-    </div>
-
-    <div class="container" id="results-page">
-        <div class="results" id="results"></div>
-    </div>
-
-    <div class="container" id="details-page">
-        <div class="card" id="details-card">
-            <h1 id="details-title">Details</h1>
-            <div class="details-content">
-                <img id="details-image" src="" alt="">
-                <p id="details-description"></p>
-                <p><strong>Location:</strong> <span id="details-location"></span></p>
-                <p><strong>Contact:</strong> <span id="details-contact"></span></p>
-                <p><strong>Email:</strong> <span id="details-email"></span></p>
-                <p><strong>Menu:</strong> <span id="details-menu"></span></p>
-                <p><strong>Rating:</strong> <span id="details-rating"></span></p>
-                <p><strong>Reviews:</strong> <span id="details-reviews"></span></p>
+            <!-- Initial Signup Form -->
+            <div id="signup-initial">
+                <h2 class="form-title">Create Your Account</h2>
+                <form id="signup-form">
+                    <div class="form-group">
+                        <label for="signup-email">Email or Mobile Number</label>
+                        <input type="text" id="signup-email" required>
+                    </div>
+                    <button type="button" class="btn" style="width: 100%" onclick="sendVerificationCode()">Send Verification Code</button>
+                </form>
+            </div>
+            
+            <!-- Verification Section -->
+            <div id="verification-section" class="verification-section">
+                <h2 class="form-title">Verify Your Account</h2>
+                <form id="verification-form">
+                    <div class="form-group">
+                        <label for="verification-code">Enter Verification Code</label>
+                        <input type="text" id="verification-code" required>
+                    </div>
+                    <button type="button" class="btn" style="width: 100%" onclick="verifyCode()">Verify Code</button>
+                </form>
+            </div>
+            
+            
+            
+            <!-- Booking Type Selection -->
+            <div id="booking-type-section" class="booking-type-section">
+                <h2 class="form-title">What would you like to book?</h2>
+                <form id="booking-type-form">
+                    <div class="form-group">
+                        <label for="booking-type">Booking Type</label>
+                        <select id="booking-type" required>
+                            <option value="">-- Select Booking Type --</option>
+                            <option value="table">Table Reservation</option>
+                            <option value="resort">Resort Booking</option>
+                            <option value="room">Room Reservation</option>
+                            <option value="waterpark">Water Park Pass</option>
+                        </select>
+                    </div>
+                    <button type="button" class="btn" style="width: 100%" onclick="selectBookingType()">Continue</button>
+                </form>
+            </div>
+            
+            <!-- Members Selection -->
+            <div id="members-section" class="members-section">
+                <h2 class="form-title">How many people?</h2>
+                <form id="members-form">
+                    <div class="form-group">
+                        <label for="members-count">Number of People</label>
+                        <select id="members-count" required>
+                            <option value="">-- Select Number of People --</option>
+                            <option value="1">1 Person</option>
+                            <option value="2">2 People</option>
+                            <option value="3">3 People</option>
+                            <option value="4">4 People</option>
+                            <option value="5">5 People</option>
+                            <option value="6+">6+ People</option>
+                        </select>
+                    </div>
+                    <button type="button" class="btn" style="width: 100%" onclick="selectMembers()">Search Available Options</button>
+                </form>
             </div>
         </div>
     </div>
-
-    <footer>
-        <p>&copy; 2025 Bookzii. All Rights Reserved. Designed with love.</p>
-    </footer>
-
-    <script>
-        function showPage(pageId) {
-            const pages = document.querySelectorAll('.container');
-            pages.forEach(page => page.classList.remove('active'));
-            document.getElementById(pageId).classList.add('active');
-        }
-
-        function login() {
-            const username = document.getElementById('login-username').value;
-            const password = document.getElementById('login-password').value;
-
-            if (!username || !password) {
-                alert('Please fill in both fields.');
-                return;
-            }
-
-            if (username === 'mohit' && password === '123') {
-                alert('Login successful!');
-                showPage('booking-type');
-            } else {
-                alert('Invalid credentials. Please try again.');
-            }
-        }
-
-
-function searchOptions() {
-    const bookingType = document.getElementById('booking-type-select').value; // Use the correct ID
-    const members = document.getElementById('members').value;
-
-    if (!members || members <= 0) {
-        alert('Please enter a valid number of members.');
-        return;
-    }
-
-    const options = {
-        table: [
-            { name: 'Cozy Cafe', image: 'cafe1.jpg', description: 'Perfect for small groups.', location: 'Downtown', contact: '+91 1234567890', email: 'cozycafe@example.com', menu: 'Coffee, Snacks', rating: '4.5/5', reviews: 'Excellent ambiance and service.' },
-            { name: 'Sunny Restaurant', image: 'cafe img5.jpg', description: 'Great for a meal.', location: 'Uptown', contact: '+91 9876543210', email: 'sunnyresto@example.com', menu: 'Multi-cuisine', rating: '4.2/5', reviews: 'Tasty food and cozy atmosphere.' }
-        ],
-        resort: [
-            { name: 'Luxury Resort', image: 'resort2.jpg', description: 'Relax and unwind.', location: 'Hilltop', contact: '+91 1122334455', email: 'luxuryresort@example.com', menu: 'Buffet, A La Carte', rating: '4.8/5', reviews: 'Amazing experience with top-notch facilities.' },
-            { name: 'Eco Retreat', image: 'resort4.jpg', description: 'A peaceful escape.', location: 'Seaside', contact: '+91 9988776655', email: 'ecoretreat@example.com', menu: 'Vegetarian, Organic', rating: '4.6/5', reviews: 'Calm environment and eco-friendly.' }
-        ],
-        waterpark: [
-            { name: 'Splash World', image: 'waterpark1.jpg', description: 'Fun water rides for all ages.', location: 'City Center', contact: '+91 5566778899', email: 'splashworld@example.com', menu: 'Snacks, Fast Food', rating: '4.3/5', reviews: 'Great fun for families and kids.' }
-        ],
-        hotel: [
-            { name: 'Grand Hotel', image: 'hotel1.jpg', description: '5-star comfort and luxury.', location: 'Downtown', contact: '+91 2233445566', email: 'grandhotel@example.com', menu: 'Buffet, Room Service', rating: '4.7/5', reviews: 'Luxurious stay with great amenities.' }
-        ]
-    };
-
-    const resultsDiv = document.getElementById('results');
-    resultsDiv.innerHTML = '';
-
-    if (options[bookingType] && options[bookingType].length > 0) {
-        resultsDiv.innerHTML = options[bookingType]
-            .map(option => `
-                <div class="result-card" onclick="viewDetails('${option.name}', '${option.image}', '${option.description}', '${option.location}', '${option.contact}', '${option.email}', '${option.menu}', '${option.rating}', '${option.reviews}')">
-                    <img src="${option.image}" alt="${option.name}">
-                    <h3>${option.name}</h3>
-                    <p>${option.description}</p>
+    
+    
+    <!-- Contact Modal -->
+    <div id="contact-modal" class="modal">
+        <div class="modal-content">
+            <button class="close-modal" onclick="closeModal('contact-modal')">&times;</button>
+            <h2 class="form-title">Contact Us</h2>
+            <form id="contact-form">
+                <div class="form-group">
+                    <label for="contact-email">Email Address</label>
+                    <input type="email" id="contact-email" required>
                 </div>
-            `)
-            .join('');
-    } else {
-        resultsDiv.innerHTML = '<p style="color: red; font-size: 1.2rem;">No options available for this selection.</p>';
-    }
+                <div class="form-group">
+                    <label for="contact-phone">Phone Number (Optional)</label>
+                    <input type="tel" id="contact-phone">
+                </div>
+                <div class="form-group">
+                    <label for="contact-query">Your Query</label>
+                    <textarea id="contact-query" required></textarea>
+                </div>
+                <button type="button" class="btn" style="width: 100%" onclick="submitContactForm()">Submit</button>
+            </form>
+        </div>
+    </div>
 
-    showPage('results-page');
-}
-
-
-
-
-        function viewDetails(name, image, description, location, contact, email, menu, rating, reviews) {
-            document.getElementById('details-title').textContent = name;
-            document.getElementById('details-image').src = image;
-            document.getElementById('details-description').textContent = description;
-            document.getElementById('details-location').textContent = location;
-            document.getElementById('details-contact').textContent = contact;
-            document.getElementById('details-email').textContent = email;
-            document.getElementById('details-menu').textContent = menu;
-            document.getElementById('details-rating').textContent = rating;
-            document.getElementById('details-reviews').textContent = reviews;
-
-            showPage('details-page');
-        }
-    </script>
-</body>
-</html>
+    

@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contact Us</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Arial', sans-serif;
+        }
+
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background: #f8f9fa;
+        }
+
+        .contact-container {
+            background: white;
+            padding: 25px;
+            width: 400px;
+            border-radius: 8px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .contact-container h2 {
+            text-align: center;
+            margin-bottom: 15px;
+            color: #333;
+        }
+
+        .form-group {
+            margin-bottom: 15px;
+        }
+
+        label {
+            font-weight: bold;
+            display: block;
+            margin-bottom: 5px;
+            color: #555;
+        }
+
+        input, textarea {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            font-size: 16px;
+        }
+
+        textarea {
+            resize: none;
+            height: 100px;
+        }
+
+        .error {
+            color: red;
+            font-size: 14px;
+            margin-top: 5px;
+        }
+
+        .btn-submit {
+            width: 100%;
+            background: #007bff;
+            color: white;
+            padding: 12px;
+            font-size: 16px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        .btn-submit:hover {
+            background: #0056b3;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="contact-container">
+        <h2>Contact Us📞</h2>
+        <form id="contactForm">
+            <div class="form-group">
+                <label for="contact">Email or Contact Number</label>
+                <input type="text" id="contact" name="contact" placeholder="Enter your email or phone" required>
+                <div class="error" id="contactError"></div>
+            </div>
+
+            <div class="form-group">
+                <label for="query">Your Query</label>
+                <textarea id="query" name="query" placeholder="Type your message here" required></textarea>
+                <div class="error" id="queryError"></div>
+            </div>
+
+            <button type="submit" class="btn-submit">Send</button>
+        </form>
+    </div>
+
+    <script>
+        document.getElementById("contactForm").addEventListener("submit", function(event) {
+            event.preventDefault(); // Prevent form submission
+
+            let contact = document.getElementById("contact").value.trim();
+            let query = document.getElementById("query").value.trim();
+            let contactError = document.getElementById("contactError");
+            let queryError = document.getElementById("queryError");
+
+            contactError.textContent = "";
+            queryError.textContent = "";
+
+            let emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            let phoneRegex = /^[6-9]\d{9}$/;
+
+            if (!emailRegex.test(contact) && !phoneRegex.test(contact)) {
+                contactError.textContent = "Enter a valid email or phone number.";
+                return;
+            }
+
+            if (query.length < 5) {
+                queryError.textContent = "Query must be at least 5 characters long.";
+                return;
+            }
+
+            alert("Message sent successfully!");
+            document.getElementById("contactForm").reset(); // Clear the form
+        });
+    </script>
+
+</body>
+</html>

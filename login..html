@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login Page</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+
+        .container {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+            width: 320px;
+            text-align: center;
+        }
+
+        h2 {
+            margin-bottom: 20px;
+        }
+
+        input {
+            width: 100%;
+            padding: 8px;
+            margin: 5px 0;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+
+        button {
+            width: 100%;
+            padding: 10px;
+            background-color: #007BFF;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            margin-top: 10px;
+        }
+
+        button:hover {
+            background-color: #0056b3;
+        }
+
+        .toggle-link {
+            color: #007BFF;
+            cursor: pointer;
+            display: block;
+            margin-top: 10px;
+        }
+
+        .error-message {
+            color: red;
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="container" id="login-container">
+        <h2>Login</h2>
+        <input type="email" id="login-email" placeholder="Email" required>
+        <input type="password" id="login-password" placeholder="Password" required>
+        <button onclick="login()">Login</button>
+        <p class="error-message" id="error-message">Incorrect email or password!</p>
+        <span class="toggle-link" onclick="showForgotPassword()">Forgot Password?</span>
+        <span class="toggle-link" onclick="showSignUp()">Sign Up</span>
+    </div>
+
+    <div class="container" id="forgot-container" style="display:none;">
+        <h2>Forgot Password</h2>
+        <input type="text" id="contact-number" placeholder="Enter Contact No." required>
+        <button onclick="sendOTP()">Send OTP</button>
+        <input type="text" id="otp" placeholder="Enter OTP" style="display:none;">
+        <input type="text" id="new-username" placeholder="Create Username" style="display:none;">
+        <input type="password" id="new-password" placeholder="Create Password" style="display:none;">
+        <button onclick="resetPassword()" style="display:none;">Submit</button>
+        <span class="toggle-link" onclick="showLogin()">Back to Login</span>
+    </div>
+
+    <div class="container" id="signup-container" style="display:none;">
+        <h2>Sign Up</h2>
+        <input type="email" id="signup-email" placeholder="Email" required>
+        <input type="password" id="signup-password" placeholder="Create Password" required>
+        <input type="password" id="confirm-password" placeholder="Confirm Password" required>
+        <button onclick="signUp()">Sign Up</button>
+        <span class="toggle-link" onclick="showLogin()">Already have an account? Login</span>
+    </div>
+
+    <script>
+        const users = {
+            "test@example.com": "password123",
+            "mohit": "123"
+        };
+
+        function login() {
+            const email = document.getElementById("login-email").value;
+            const password = document.getElementById("login-password").value;
+            const errorMessage = document.getElementById("error-message");
+
+            if (users[email] && users[email] === password) {
+                alert("Login Successful!"); window.location="home.html";
+            } else {
+                errorMessage.style.display = "block";
+            }
+        }
+        
+        function showLogin() {
+            document.getElementById("login-container").style.display = "block";
+            document.getElementById("forgot-container").style.display = "none";
+            document.getElementById("signup-container").style.display = "none";
+        }
+
+        function showForgotPassword() {
+            document.getElementById("login-container").style.display = "none";
+            document.getElementById("forgot-container").style.display = "block";
+        }
+
+        function showSignUp() {
+            document.getElementById("login-container").style.display = "none";
+            document.getElementById("signup-container").style.display = "block";
+        }
+
+        function sendOTP() {
+            alert("OTP Sent!");
+            document.getElementById("otp").style.display = "block";
+            document.getElementById("new-username").style.display = "block";
+            document.getElementById("new-password").style.display = "block";
+            document.querySelector("#forgot-container button:nth-of-type(2)").style.display = "block";
+        }
+
+        function resetPassword() {
+            alert("Password Reset Successfully!");
+            showLogin();
+        }
+
+        function signUp() {
+            alert("Signed Up Successfully!");
+            showLogin();
+        }
+    </script>
+</body>
+</html>

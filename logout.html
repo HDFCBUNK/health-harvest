@@ -1,0 +1,19 @@
+<script>
+    document.getElementById("logout()").addEventListener("click", function () {
+      // Show confirmation message
+      if (confirm("Are you sure you want to log out and delete your account?")) {
+        
+        // Simulate account deletion (replace with actual backend request if needed)
+        setTimeout(() => {
+          alert("Your account has been successfully deleted.");
+          
+          // Hide logout-related elements
+          document.getElementById("dashboard").style.display = "none";
+          
+          // Show signup form
+          document.getElementById("signup.html").style.display = "block";
+  
+        }, 1000);
+      }
+    });
+  </script>

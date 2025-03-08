@@ -1,0 +1,530 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bookzii - Your Ultimate Booking Platform</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+    <style>
+        :root {
+            --primary-color: #3498db;
+            --header-color: #2c3e50;
+            --white: #ffffff;
+            --light-gray: #f4f4f4;
+            --dark-gray: #495057;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Arial', sans-serif;
+        }
+
+        body {
+            background-color: var(--light-gray);
+            color: #333;
+        }
+
+        .header {
+            background-color: var(--header-color);
+            color: var(--white);
+            padding: 15px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+
+        .logo {
+            font-size: 24px;
+            font-weight: bold;
+            color: var(--white);
+            text-decoration: none;
+        }
+        .nav-buttons {
+            display: flex;
+            gap: 15px;
+        }
+
+        .nav-btn {
+            background-color: var(--primary-color);
+            color: var(--white);
+            border: none;
+            padding: 10px 15px;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .nav-btn:hover {
+            background-color: #2980b9;
+            transform: translateY(-2px);
+        }
+
+
+
+
+
+
+        .search-container {
+            background-color: var(--white);
+            padding: 20px;
+            margin: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+
+        .search-options {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+            align-items: center;
+        }
+
+        .search-options > * {
+            flex-grow: 1;
+            min-width: 150px;
+        }
+
+        .search-btn {
+            background-color: var(--primary-color);
+            color: var(--white);
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .time-container {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            position: relative;
+        }
+
+        .time-info {
+            cursor: help;
+            color: var(--primary-color);
+        }
+
+        .tooltip {
+            position: absolute;
+            bottom: 100%;
+            left: 50%;
+            transform: translateX(-50%);
+            background-color: var(--header-color);
+            color: var(--white);
+            padding: 10px;
+            border-radius: 5px;
+            width: 250px;
+            display: none;
+            z-index: 10;
+        }
+
+        .time-container:hover .tooltip {
+            display: block;
+        }
+
+        .time-slots {
+            display: flex;
+            gap: 10px;
+            margin-top: 10px;
+        }
+
+        .time-slot {
+            background-color: var(--primary-color);
+            color: var(--white);
+            padding: 5px 10px;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .time-slot:hover {
+            background-color: #2980b9;
+        }
+
+
+        .section-title {
+            text-align: center;
+            margin: 20px 0;
+            font-size: 24px;
+            color: var(--header-color);
+        }
+
+        .top-rated-categories {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 20px;
+            padding: 20px;
+        }
+
+        .category-section {
+            width: 100%;
+        }
+
+        .top-rated-row {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 20px;
+        }
+
+        .top-rated-card {
+            background-color: var(--white);
+            border-radius: 10px;
+            width: 250px;
+            overflow: hidden;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            transition: transform 0.3s ease;
+            margin-bottom: 20px;
+        }
+
+        .top-rated-card:hover {
+            transform: scale(1.05);
+        }
+
+        .card-image {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+        }
+
+        .card-content {
+            padding: 15px;
+        }
+
+        .card-title {
+            font-size: 18px;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+
+        .card-rating {
+            color: #f39c12;
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+        }
+
+        .card-rating-text {
+            margin-left: 10px;
+        }
+
+        .card-location {
+            color: var(--dark-gray);
+            margin-bottom: 10px;
+        }
+
+        .card-btn {
+            background-color: var(--primary-color);
+            color: var(--white);
+            border: none;
+            padding: 8px 15px;
+            border-radius: 5px;
+            cursor: pointer;
+            width: 100%;
+        }
+
+        @media (max-width: 768px) {
+            .top-rated-row {
+                flex-direction: column;
+                align-items: center;
+            }
+        }
+
+        /* Rest of the previous CSS remains the same */
+    </style>
+</head>
+<body>
+    <header class="header">
+        <a href="#" class="logo">Bookzii</a>
+    
+        <div class="nav-buttons">
+            <button class="nav-btn" onclick="showBookings()">
+                <i class="fas fa-calendar-check"></i> My Bookings
+            </button>
+            <button class="nav-btn" onclick="showProfile()">
+                <i class="fas fa-user"></i> Profile
+            </button>
+            <button class="nav-btn" onclick="logout()">
+                <i class="fas fa-sign-out-alt"></i> Logout
+            </button>
+        </div>
+
+
+
+
+        
+
+    </header>
+
+    <div class="search-container">
+        <div class="search-options">
+            <select id="booking-type">
+                <option value="">Select Booking Type</option>
+                <option value="restaurant">Restaurant</option>
+                <option value="cafe">Cafe</option>
+                <option value="room">Room</option>
+                <option value="villa">Villa</option>
+                <option value="waterpark">Water Park</option>
+                <option value="hotel">Hotel</option>
+            </select>
+            <input type="date" id="booking-date">
+            <div class="time-container">
+                <input type="time" id="booking-time">
+                <i class="fas fa-info-circle time-info"></i>
+                <div class="tooltip">
+                    <p>Time Slot Information:</p>
+                    <ul>
+                        <li>Morning: 6:00 AM - 11:59 AM</li>
+                        <li>Afternoon: 12:00 PM - 5:59 PM</li>
+                        <li>Evening: 6:00 PM - 11:59 PM</li>
+                        <li>Night: 12:00 AM - 5:59 AM</li>
+                    </ul>
+                    <p>Recommended times may vary by establishment.</p>
+                </div>
+            </div>
+            <input type="text" placeholder="Search by name (optional)" id="search-name">
+            <button class="search-btn" onclick="searchBookings()">Search</button>
+        </div>
+        <div class="time-slots">
+            <div class="time-slot" onclick="setTimeSlot('morning')">Morning</div>
+            <div class="time-slot" onclick="setTimeSlot('afternoon')">Afternoon</div>
+            <div class="time-slot" onclick="setTimeSlot('evening')">Evening</div>
+            <div class="time-slot" onclick="setTimeSlot('night')">Night</div>
+        </div>
+    </div>
+
+    <div class="top-rated-categories">
+        <!-- Restaurants Section -->
+        <div class="category-section">
+            <h2 class="section-title">Top Rated Restaurants</h2>
+            <div class="top-rated-row" id="top-restaurants">
+                <!-- Restaurants will be dynamically populated -->
+            </div>
+        </div>
+
+        <!-- Resorts Section -->
+        <div class="category-section">
+            <h2 class="section-title">Top Rated Resorts</h2>
+            <div class="top-rated-row" id="top-resorts">
+                <!-- Resorts will be dynamically populated -->
+            </div>
+        </div>
+
+        <!-- Villas Section -->
+        <div class="category-section">
+            <h2 class="section-title">Top Rated Villas</h2>
+            <div class="top-rated-row" id="top-villas">
+                <!-- Villas will be dynamically populated -->
+            </div>
+        </div>
+
+        <!-- Cafes Section -->
+        <div class="category-section">
+            <h2 class="section-title">Top Rated Cafes</h2>
+            <div class="top-rated-row" id="top-cafes">
+                <!-- Cafes will be dynamically populated -->
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Top Rated Establishments Data
+        const topEstablishments = {
+            restaurants: [
+                {
+                    name: 'Skyfall Restaurant',
+                    rating: 4.3,
+                    location: 'Ridhi Tower, 5th Floor, SB 57, Tonk Rd, opposite Sawai Mansingh Stadium, Bapu Nagar, Jaipur, Rajasthan 302015',
+                    image: 'images/skyfall.JPG'
+                },
+                {
+                    name: 'The Forresta Kitchen & Bar',
+                    rating: 4.2,
+                    location: ' Devraj Niwas, Mirza Ismail Rd, near Khasa Kothi Flyover, Bani Park, Jaipur, Rajasthan 302016',
+                    image: 'images/The Forresta Kitchen & Bar.jpg'
+                },
+                {
+                    name: 'Anandoham Restaurant & Banquet',
+                    rating: 4.9,
+                    location: ' Brij Bhawan, Kalwar Rd, opp. ICICI Bank, Raghunathpuri, Jhotwara, Jaipur, Rajasthan 302012',
+                    image: 'images/Anandoham Restaurant & Banquet.jpg'
+                },
+                {
+                    name: 'DanielS Oriental Kitchen',
+                    rating: 4.7,
+                    location: '36 Sanjay Marg , Gopal Bari, Hathroi, Jaipur, Rajasthan 302001',
+                    image: 'images/Daniels Oriental Kitchen.jpg'
+                }
+            ],
+            resorts: [
+                {
+                    name: 'Taj Devi Ratn Resort & Spa, Jaipur',
+                    rating: 4.9,
+                    location: 'Ballupura Farms, Village Jamdoli, Agra Road , 302031 Jaipur, India',
+                    image: 'images/Taj Devi Ratn Resort & Spa, Jaipur.jpg'
+                },
+                {
+                    name: 'Umaid Haveli-A Heritage Style Hotel & Resort',
+                    rating: 4.8,
+                    location: 'RIICO Kukas, NH8, Delhi-Jaipur Highway Amber, 302028 Jaipur, India',
+                    image: 'images/Umaid Haveli-A Heritage Style Hotel & Resort.jpg'
+                },
+                {
+                    name: 'Tree of Life Resort & Spa Jaipur',
+                    rating: 4.7,
+                    location: 'Kacherwala, Kukas, 302028 Jaipur, India',
+                    image: 'images/Tree of Life Resort & Spa Jaipur.jpg'
+                },
+                {
+                    name: 'Nirbana Palace - A Heritage Hotel and Spa',
+                    rating: 4.6,
+                    location: 'Near Khasa Kothi Circle M I Road, Bani Park, 302001 Jaipur, India',
+                    image: 'images/Nirbana Palace - A Heritage Hotel and Spa.jpg'
+                }
+            ],
+            villas: [
+                {
+                    
+                    name: 'The Rustic Villa',
+                    rating: 4.9,
+                    location: 'Lakhawali dhani, Bobas Rd, near oxford international school, Jaipur, Ramsingh Pura, Rajasthan 303007',
+                    image: 'images/The Rustic Villa..jpg' 
+                },
+                
+                {
+                
+                
+                    name: 'IBIZA FARM STAY , A 3BHK MODERN VILLA WITH POOL',
+                    rating: 4.8,
+                    location: 'Lakhawali dhani, Bobas Rd, near oxford international school, Jaipur, Ramsingh Pura, Rajasthan 303007',
+                    image: 'images/IBIZA FARM STAY , A 3BHK MODERN VILLA WITH POOL.webp'
+                },
+                {
+                    name: 'Inaayat Villa by StayVista',
+                    rating: 4.7,
+                    location: 'Ansal Sushant City 1, Plot No B 94/95/96, Sushant City - I, Inaayat, Jaipur, Rajasthan 302012',
+                    image: 'images/StayVista at Inaayat.jpg'
+                },
+                {
+                    name: 'The Deck',
+                    rating: 4.6,
+                    location: '76, near Durgapura Railway Station, Jadon Nagar-B, Mahaveer Nagar, Durgapura, Jaipur, Rajasthan 302018',
+                    image: 'images/The Deck.jpg'
+                }
+            ],
+            cafes: [
+                {
+                    name: 'Diona - Ale Works | Kitchen | Bar',
+                    rating: 4.7,
+                    location: 'The Grand Anukampa, Elevated Ajmer Rd, Exit, Jaipur, Rajasthan 302015',
+                    image: 'images/Diona -.jpg'
+                },
+                {
+                    name: 'Sultanat Cafe Fort Jaipur',
+                    rating: 4.6,
+                    location: 'Kesar Marg, Basement - P-20, SL Marg, Lal Bahadur Nagar, Adinath Nagar, Jaipur, Rajasthan 302018',
+                    image: 'images/Sultanat Cafe Fort Jaipur.jpg'
+                },
+                {
+                    name: 'Olio Rooftop Restaurant & Kitchen',
+                    rating: 4.5,
+                    location: '11, Kalyan Kunj, khirani phatak road, Ridhi Sidhi Nagar, Awadhpuri, Jhotwara, Jaipur, Rajasthan 302012',
+                    image: 'images/Olio Rooftop Restaurant & Kitchen.jpg'
+                },
+                {
+                    name: 'Nibs Cafe ',
+                    rating: 4.4,
+                    location: 'S-6, Jawahar Lal Nehru Marg, opposite WTP Mall, Adinath Nagar, Jaipur, Rajasthan 302017',
+                    image: 'images/Nibs Cafe.jpg'
+                }
+            ]
+        };
+
+        // Function to generate star rating HTML
+        function generateStarRating(rating) {
+            const fullStars = Math.floor(rating);
+            const halfStar = rating % 1 >= 0.5 ? 1 : 0;
+            const emptyStars = 5 - fullStars - halfStar;
+
+            let starHTML = '';
+            for (let i = 0; i < fullStars; i++) {
+                starHTML += '<i class="fas fa-star"></i>';
+            }
+            if (halfStar) {
+                starHTML += '<i class="fas fa-star-half-alt"></i>';
+            }
+            for (let i = 0; i < emptyStars; i++) {
+                starHTML += '<i class="far fa-star"></i>';
+            }
+            return starHTML;
+        }
+
+        // Function to create establishment cards
+        function createEstablishmentCards(establishments, containerId) {
+            const container = document.getElementById(containerId);
+            
+            establishments.forEach(est => {
+                const card = document.createElement('div');
+                card.className = 'top-rated-card';
+                card.innerHTML = `
+                    <img src="${est.image}" alt="${est.name}" class="card-image">
+                    <div class="card-content">
+                        <h3 class="card-title">${est.name}</h3>
+                        <div class="card-location">${est.location}</div>
+                        <div class="card-rating">
+                            ${generateStarRating(est.rating)}
+                            <span class="card-rating-text">${est.rating}/5</span>
+                        </div>
+                        <button class="card-btn">Book Now</button>
+                    </div>
+                `;
+                container.appendChild(card);
+            });
+        }
+
+        // Populate top-rated sections
+        createEstablishmentCards(topEstablishments.restaurants, 'top-restaurants');
+        createEstablishmentCards(topEstablishments.resorts, 'top-resorts');
+        createEstablishmentCards(topEstablishments.villas, 'top-villas');
+        createEstablishmentCards(topEstablishments.cafes, 'top-cafes');
+    </script>
+
+    
+
+
+    <section id="results-section" class="top-rated-section">
+        <!-- Results will be dynamically populated here -->
+    </section>
+
+    <script>
+        // Previous JavaScript code remains the same, with these additional functions:
+
+        function setTimeSlot(slot) {
+            const timeInput = document.getElementById('booking-time');
+            
+            const timeSlots = {
+                'morning': '09:00',
+                'afternoon': '14:00',
+                'evening': '19:00',
+                'night': '22:00'
+            };
+
+            timeInput.value = timeSlots[slot];
+        }
+        
+        
+        // Rest of the previous script remains unchanged
+        
+    </script>
+</body>
+</html>
+
